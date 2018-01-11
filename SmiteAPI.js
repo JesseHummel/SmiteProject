@@ -8,7 +8,7 @@ function ShowItems(value)
     var itempic = document.createElement("img");
     var textnode = document.createTextNode(value.DeviceName);       // Create a text node
     itempic.src = value.itemIcon_URL;
-    node.appendChild(textnode);                              // Append the text to <li>
+    node.appendChild(textnode);// Append the text to <li>
     document.getElementById("itemList").appendChild(node);
     document.getElementById("imageList").appendChild(itempic);
     value.ItemDescription.Menuitems.forEach(ShowDescription);
