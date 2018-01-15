@@ -1,25 +1,55 @@
 
 
-function ShowItems(value)
-{
-    //document.getElementById("itemName").innerHTML = value.DeviceName;
+function ShowItems(value) {
     console.log(value);
-    var node = document.createElement("LI");// Create a <li> node
     var itempic = document.createElement("img");
-    var textnode = document.createTextNode(value.DeviceName);       // Create a text node
+    // Create a text node
+    var description;
     itempic.src = value.itemIcon_URL;
-    node.appendChild(textnode);// Append the text to <li>
-    document.getElementById("itemList").appendChild(node);
+    if(value.ItemDescription.Menuitems[0] != null && value.ItemDescription.Menuitems[1] != null && value.ItemDescription.Menuitems[2] != null && value.ItemDescription.Menuitems[3] != null)
+    {
+        description = value.DeviceName + "\n" + value.ItemDescription.Menuitems[0].Description + value.ItemDescription.Menuitems[0].Value +
+            "\n" + value.ItemDescription.Menuitems[1].Description + value.ItemDescription.Menuitems[1].Value + "\n" +
+            value.ItemDescription.Menuitems[2].Description + value.ItemDescription.Menuitems[2].Value + "\n" +
+    value.ItemDescription.Menuitems[3].Description + value.ItemDescription.Menuitems[3].Value;
+    }
+    else if (value.ItemDescription.Menuitems[0] != null && value.ItemDescription.Menuitems[1] != null && value.ItemDescription.Menuitems[2] != null)
+    {
+        description = value.DeviceName + "\n" + value.ItemDescription.Menuitems[0].Description + value.ItemDescription.Menuitems[0].Value +
+            "\n" + value.ItemDescription.Menuitems[1].Description + value.ItemDescription.Menuitems[1].Value + "\n" +
+            value.ItemDescription.Menuitems[2].Description + value.ItemDescription.Menuitems[2].Value;
+    }
+    else if(value.ItemDescription.Menuitems[0] != null && value.ItemDescription.Menuitems[1] != null)
+    {
+       description = value.DeviceName + "\n" + value.ItemDescription.Menuitems[0].Description + value.ItemDescription.Menuitems[0].Value +
+        "\n" + value.ItemDescription.Menuitems[1].Description + value.ItemDescription.Menuitems[1].Value;
+    }
+    else if(value.ItemDescription.Menuitems[0])
+    {
+        description = value.DeviceName + "\n" + value.ItemDescription.Menuitems[0].Description + value.ItemDescription.Menuitems[0].Value
+    }
+    else
+    {
+        description = value.DeviceName;
+    }
+
+    itempic.title = description;
     document.getElementById("imageList").appendChild(itempic);
-    value.ItemDescription.Menuitems.forEach(ShowDescription);
+    //value.ItemDescription.Menuitems.forEach(ShowDescription);
 }
 function ShowDescription(value)
 {
-    var itemDescriptionNode = document.createElement("LI");
-    var description = document.createTextNode(value.Description + value.Value);
-    itemDescriptionNode.appendChild(description);
-    document.getElementById("itemList").appendChild(itemDescriptionNode);
+    //var itemDescriptionNode = document.createElement("LI");
+    //var description = (value.Description + value.Value);
+    //itemDescriptionNode.appendChild(description);
+    return value.Description + value.Value;
+    //document.getElementById("itemList").appendChild(itemDescriptionNode);
 
+}
+
+function itemSearch()
+{
+    
 }
 
 var xmlhttp = new XMLHttpRequest(),
