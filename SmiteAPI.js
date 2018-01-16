@@ -1,8 +1,10 @@
-
+items = [];
 
 function ShowItems(value) {
-    console.log(value);
+  //  console.log(value);
     var itempic = document.createElement("img");
+
+    items.push(value);
     // Create a text node
     var description;
     itempic.src = value.itemIcon_URL;
@@ -37,20 +39,54 @@ function ShowItems(value) {
     document.getElementById("imageList").appendChild(itempic);
     //value.ItemDescription.Menuitems.forEach(ShowDescription);
 }
-function ShowDescription(value)
-{
-    //var itemDescriptionNode = document.createElement("LI");
-    //var description = (value.Description + value.Value);
-    //itemDescriptionNode.appendChild(description);
-    return value.Description + value.Value;
-    //document.getElementById("itemList").appendChild(itemDescriptionNode);
 
-}
 
-function itemSearch()
-{
-    
-}
+document.getElementById("searchButton").onclick = function(){
+    var x = document.getElementById("searchbar");
+
+    $('#itemSearched').children().css('display','none');
+    for(i =0; i < items.length;i++ ) {
+        if (items[i].DeviceName.toLowerCase().includes(x.value.toLowerCase())) {
+            var img = document.createElement("img");
+            var description;
+            img.src = items[i].itemIcon_URL;
+            if(items[i].ItemDescription.Menuitems[0] != null && items[i].ItemDescription.Menuitems[1] != null && items[i].ItemDescription.Menuitems[2] != null && items[i].ItemDescription.Menuitems[3] != null)
+            {
+                description = items[i].DeviceName + "\n" + items[i].ItemDescription.Menuitems[0].Description + items[i].ItemDescription.Menuitems[0].Value +
+                    "\n" + items[i].ItemDescription.Menuitems[1].Description + items[i].ItemDescription.Menuitems[1].Value + "\n" +
+                    items[i].ItemDescription.Menuitems[2].Description + items[i].ItemDescription.Menuitems[2].Value + "\n" +
+                    items[i].ItemDescription.Menuitems[3].Description + items[i].ItemDescription.Menuitems[3].Value;
+            }
+            else if (items[i].ItemDescription.Menuitems[0] != null && items[i].ItemDescription.Menuitems[1] != null && items[i].ItemDescription.Menuitems[2] != null)
+            {
+                description = items[i].DeviceName + "\n" + items[i].ItemDescription.Menuitems[0].Description + items[i].ItemDescription.Menuitems[0].Value +
+                    "\n" + items[i].ItemDescription.Menuitems[1].Description + items[i].ItemDescription.Menuitems[1].Value + "\n" +
+                    items[i].ItemDescription.Menuitems[2].Description + items[i].ItemDescription.Menuitems[2].Value;
+            }
+            else if(items[i].ItemDescription.Menuitems[0] != null && items[i].ItemDescription.Menuitems[1] != null)
+            {
+                description = items[i].DeviceName + "\n" + items[i].ItemDescription.Menuitems[0].Description + items[i].ItemDescription.Menuitems[0].Value +
+                    "\n" + items[i].ItemDescription.Menuitems[1].Description + items[i].ItemDescription.Menuitems[1].Value;
+            }
+            else if(items[i].ItemDescription.Menuitems[0])
+            {
+                description = items[i].DeviceName + "\n" + items[i].ItemDescription.Menuitems[0].Description + items[i].ItemDescription.Menuitems[0].Value
+            }
+            else
+            {
+                description = items[i].DeviceName;
+            }
+            img.title = description;
+            document.getElementById("itemSearched").appendChild(img);
+            $('#imageList').children().css('display','none');
+
+           // console.log(img);
+        }
+        else {
+            console.log("try again");
+        }
+    }
+};
 
 var xmlhttp = new XMLHttpRequest(),
      json;
