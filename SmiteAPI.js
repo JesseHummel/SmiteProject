@@ -8,6 +8,9 @@ function ShowItems(value) {
     // Create a text node
     var description;
     itempic.src = value.itemIcon_URL;
+    itempic.onclick = function(){
+
+    };
     if(value.ItemDescription.Menuitems[0] != null && value.ItemDescription.Menuitems[1] != null && value.ItemDescription.Menuitems[2] != null && value.ItemDescription.Menuitems[3] != null)
     {
         description = value.DeviceName + "\n" + value.ItemDescription.Menuitems[0].Description + value.ItemDescription.Menuitems[0].Value +
