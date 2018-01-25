@@ -1,5 +1,5 @@
 items = [];
-
+l = 0;
 function ShowItems(value) {
   //  console.log(value);
     var itempic = document.createElement("img");
@@ -7,39 +7,63 @@ function ShowItems(value) {
     items.push(value);
     // Create a text node
     var description;
-    itempic.src = value.itemIcon_URL;
+    var descriptionOne;
+
+    //itempic.src = value.itemIcon_URL;
     itempic.onclick = function(){
 
     };
     if(value.ItemDescription.Menuitems[0] != null && value.ItemDescription.Menuitems[1] != null && value.ItemDescription.Menuitems[2] != null && value.ItemDescription.Menuitems[3] != null)
     {
-        description = value.DeviceName + "\n" + value.ItemDescription.Menuitems[0].Description + value.ItemDescription.Menuitems[0].Value +
-            "\n" + value.ItemDescription.Menuitems[1].Description + value.ItemDescription.Menuitems[1].Value + "\n" +
-            value.ItemDescription.Menuitems[2].Description + value.ItemDescription.Menuitems[2].Value + "\n" +
-    value.ItemDescription.Menuitems[3].Description + value.ItemDescription.Menuitems[3].Value;
+        description =  value.ItemDescription.Menuitems[0].Description +":"+ value.ItemDescription.Menuitems[0].Value +
+            "--" + value.ItemDescription.Menuitems[1].Description + ":"+ value.ItemDescription.Menuitems[1].Value + "--" +
+            value.ItemDescription.Menuitems[2].Description + ":"+ value.ItemDescription.Menuitems[2].Value + "--" +
+    value.ItemDescription.Menuitems[3].Description +":"+ value.ItemDescription.Menuitems[3].Value;
     }
     else if (value.ItemDescription.Menuitems[0] != null && value.ItemDescription.Menuitems[1] != null && value.ItemDescription.Menuitems[2] != null)
     {
-        description = value.DeviceName + "\n" + value.ItemDescription.Menuitems[0].Description + value.ItemDescription.Menuitems[0].Value +
-            "\n" + value.ItemDescription.Menuitems[1].Description + value.ItemDescription.Menuitems[1].Value + "\n" +
-            value.ItemDescription.Menuitems[2].Description + value.ItemDescription.Menuitems[2].Value;
+        description = value.ItemDescription.Menuitems[0].Description +":"+ value.ItemDescription.Menuitems[0].Value +
+            "--" + value.ItemDescription.Menuitems[1].Description + ":"+value.ItemDescription.Menuitems[1].Value + "--" +
+            value.ItemDescription.Menuitems[2].Description +":"+ value.ItemDescription.Menuitems[2].Value;
     }
     else if(value.ItemDescription.Menuitems[0] != null && value.ItemDescription.Menuitems[1] != null)
     {
-       description = value.DeviceName + "\n" + value.ItemDescription.Menuitems[0].Description + value.ItemDescription.Menuitems[0].Value +
-        "\n" + value.ItemDescription.Menuitems[1].Description + value.ItemDescription.Menuitems[1].Value;
+       description =  value.ItemDescription.Menuitems[0].Description +":"+ value.ItemDescription.Menuitems[0].Value +
+        "--" + value.ItemDescription.Menuitems[1].Description +":"+ value.ItemDescription.Menuitems[1].Value;
     }
     else if(value.ItemDescription.Menuitems[0])
     {
-        description = value.DeviceName + "\n" + value.ItemDescription.Menuitems[0].Description + value.ItemDescription.Menuitems[0].Value
+        description =  value.ItemDescription.Menuitems[0].Description +":"+ value.ItemDescription.Menuitems[0].Value
     }
     else
     {
-        description = value.DeviceName;
+        description = "";
     }
 
-    itempic.title = description;
-    document.getElementById("imageList").appendChild(itempic);
+    //document.getElementById("information").innerText = description;
+
+    var a1 = "<div class=card style=\"width: 15rem;\" ><img class=card-img-top src= ";
+    var a = value.itemIcon_URL;
+    var a2= " ><div class='card-block'><h5 class='card-title'>";
+    var a6= value.DeviceName;
+    var a5= "</h3><p class='card-text'>";
+    var a4= description;
+    var a3 ="</p></div></div>";
+
+    var g;
+
+        g= document.createElement('div');
+        g.id = l;
+        document.getElementById("cards").appendChild(g);
+        var abc = a1+a+a2+a6+a5+a4+a3;
+
+    document.getElementById(g.id).innerHTML=abc;
+
+
+    l++;
+    //itempic.title = description;
+    //document.getElementById("imageList").appendChild(itempic);
+
     //value.ItemDescription.Menuitems.forEach(ShowDescription);
 }
 
