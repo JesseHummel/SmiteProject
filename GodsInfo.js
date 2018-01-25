@@ -1,6 +1,6 @@
 gods = [];
 godsinfo = [];
-godinformation = [];
+
 function ShowGods(value) {
 var godPic = document.createElement('IMG');
 gods.push(value);
@@ -38,13 +38,22 @@ document.getElementById("searchbtn").onclick = function() {
     $('#godSearched').children().css('display', 'none');
     for (i = 0; i < gods.length; i++) {
         if (gods[i].Name.toLowerCase().includes(x.value.toLowerCase())) {
-            var img = document.createElement("IMG");
-            img.src = gods[i].godIcon_URL;
-            img.title = gods[i].Name + "\n" + gods[i].Title;
+            var image = document.createElement("IMG");
+            image.src = gods[i].godIcon_URL;
+            image.title = gods[i].Name + "\n" + gods[i].Title;
+            var godname = gods[i].Name + "\n" + gods[i].Title;
             var godinformation = godsinfo[i];
+            var imgtest = gods[i].godCard_URL;
+            image.onclick = (function(x, y, z){
+                return function () {
+                    window.localStorage.setItem("godname", y);
+                    window.localStorage.setItem("godinfo", x);
+                    window.localStorage.setItem("imgtest", z);
+                    location.href = "GodsInfoDisplay.html";
+                }}(godinformation, godname, imgtest));
 
-            document.getElementById("godSearched").appendChild(img);
             $('#godList').children().css('display', 'none');
+            document.getElementById("godSearched").appendChild(image);
 
             // console.log(img);
         }
