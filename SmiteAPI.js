@@ -1,4 +1,7 @@
 items = [];
+itemDescription = [];
+itemName = [];
+searchpic = [];
 l = 0;
 function ShowItems(value) {
   //  console.log(value);
@@ -7,12 +10,12 @@ function ShowItems(value) {
     items.push(value);
     // Create a text node
     var description;
-    var descriptionOne;
 
     //itempic.src = value.itemIcon_URL;
     itempic.onclick = function(){
 
     };
+    console.log(value);
     if(value.ItemDescription.Menuitems[0] != null && value.ItemDescription.Menuitems[1] != null && value.ItemDescription.Menuitems[2] != null && value.ItemDescription.Menuitems[3] != null)
     {
         description =  value.ItemDescription.Menuitems[0].Description +":"+ value.ItemDescription.Menuitems[0].Value +
@@ -39,10 +42,14 @@ function ShowItems(value) {
     {
         description = "";
     }
+    if(value.ItemDescription.SecondaryDescription != null && value.ItemDescription.SecondaryDescription !== "")
+    {
+        description += "-----" + value.ItemDescription.SecondaryDescription;
+    }
 
     //document.getElementById("information").innerText = description;
 
-    var a1 = "<div class=card style=\"width: 15rem;\" ><img class=card-img-top src= ";
+    var a1 = "<div class='card bg-transparent' style=\"width: 15rem;\" ><img class=card-img-top src= ";
     var a = value.itemIcon_URL;
     var a2= " ><div class='card-block'><h5 class='card-title'>";
     var a6= value.DeviceName;
@@ -70,6 +77,7 @@ function ShowItems(value) {
 
 document.getElementById("searchButton").onclick = function(){
     var x = document.getElementById("searchbar");
+    var searchcount = 0;
 
     $('#itemSearched').children().css('display','none');
     for(i =0; i < items.length;i++ ) {
@@ -79,33 +87,42 @@ document.getElementById("searchButton").onclick = function(){
             img.src = items[i].itemIcon_URL;
             if(items[i].ItemDescription.Menuitems[0] != null && items[i].ItemDescription.Menuitems[1] != null && items[i].ItemDescription.Menuitems[2] != null && items[i].ItemDescription.Menuitems[3] != null)
             {
-                description = items[i].DeviceName + "\n" + items[i].ItemDescription.Menuitems[0].Description + items[i].ItemDescription.Menuitems[0].Value +
-                    "\n" + items[i].ItemDescription.Menuitems[1].Description + items[i].ItemDescription.Menuitems[1].Value + "\n" +
-                    items[i].ItemDescription.Menuitems[2].Description + items[i].ItemDescription.Menuitems[2].Value + "\n" +
+                description =  items[i].ItemDescription.Menuitems[0].Description + items[i].ItemDescription.Menuitems[0].Value +
+                    "--" + items[i].ItemDescription.Menuitems[1].Description + items[i].ItemDescription.Menuitems[1].Value + "--" +
+                    items[i].ItemDescription.Menuitems[2].Description + items[i].ItemDescription.Menuitems[2].Value + "--" +
                     items[i].ItemDescription.Menuitems[3].Description + items[i].ItemDescription.Menuitems[3].Value;
             }
             else if (items[i].ItemDescription.Menuitems[0] != null && items[i].ItemDescription.Menuitems[1] != null && items[i].ItemDescription.Menuitems[2] != null)
             {
-                description = items[i].DeviceName + "\n" + items[i].ItemDescription.Menuitems[0].Description + items[i].ItemDescription.Menuitems[0].Value +
-                    "\n" + items[i].ItemDescription.Menuitems[1].Description + items[i].ItemDescription.Menuitems[1].Value + "\n" +
+                description =  items[i].ItemDescription.Menuitems[0].Description + items[i].ItemDescription.Menuitems[0].Value +
+                    "--" + items[i].ItemDescription.Menuitems[1].Description + items[i].ItemDescription.Menuitems[1].Value + "--" +
                     items[i].ItemDescription.Menuitems[2].Description + items[i].ItemDescription.Menuitems[2].Value;
             }
             else if(items[i].ItemDescription.Menuitems[0] != null && items[i].ItemDescription.Menuitems[1] != null)
             {
-                description = items[i].DeviceName + "\n" + items[i].ItemDescription.Menuitems[0].Description + items[i].ItemDescription.Menuitems[0].Value +
-                    "\n" + items[i].ItemDescription.Menuitems[1].Description + items[i].ItemDescription.Menuitems[1].Value;
+                description =  items[i].ItemDescription.Menuitems[0].Description + items[i].ItemDescription.Menuitems[0].Value +
+                    "--" + items[i].ItemDescription.Menuitems[1].Description + items[i].ItemDescription.Menuitems[1].Value;
             }
             else if(items[i].ItemDescription.Menuitems[0])
             {
-                description = items[i].DeviceName + "\n" + items[i].ItemDescription.Menuitems[0].Description + items[i].ItemDescription.Menuitems[0].Value
+                description =  items[i].ItemDescription.Menuitems[0].Description + items[i].ItemDescription.Menuitems[0].Value
             }
             else
             {
-                description = items[i].DeviceName;
+                description = "";
             }
-            img.title = description;
+            if(items[i].ItemDescription.SecondaryDescription != null && items[i].ItemDescription.SecondaryDescription !== "")
+            {
+                description += "-----" + items[i].ItemDescription.SecondaryDescription;
+            }
+
+            itemName.push(items[i].DeviceName);
+            itemDescription.push(description);
+            searchpic.push(items[i].itemIcon_URL);
+            searchcount++;
+            //img.title = description;
             document.getElementById("itemSearched").appendChild(img);
-            $('#imageList').children().css('display','none');
+            //$('#imageList').children().css('display','none');
 
            // console.log(img);
         }
@@ -113,6 +130,14 @@ document.getElementById("searchButton").onclick = function(){
             console.log("try again");
         }
     }
+
+    window.localStorage.setItem("searchName", JSON.stringify(itemName));
+    window.localStorage.setItem("searchDescription",JSON.stringify(itemDescription));
+    window.localStorage.setItem("searchPic", JSON.stringify(searchpic));
+    window.localStorage.setItem("count", searchcount);
+    location.href = "ItemSearch.html";
+
+
 };
 
 var xmlhttp = new XMLHttpRequest(),
